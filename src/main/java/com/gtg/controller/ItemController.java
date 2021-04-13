@@ -14,7 +14,6 @@ import com.gtg.model.Item;
 import com.gtg.repository.ItemRepository;
 
 @RestController
-@RequestMapping("/api")
 @CrossOrigin("*")
 public class ItemController {
 	
@@ -26,6 +25,11 @@ public class ItemController {
 		return itemRepo.findAll();
 	}
 	
+	@GetMapping("/")
+	public String getDefaultResponse() {
+		return "Hello";
+	}
+	
 	
 	@PostMapping("newItem")
 	public String addNewItem(@RequestBody Item item) {
@@ -35,6 +39,8 @@ public class ItemController {
 		}
 		return "Failed to create item. Try again!"; 
 	}
+	
+	@GetMapping()
 
 	
 	@Autowired
