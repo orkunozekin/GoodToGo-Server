@@ -18,4 +18,4 @@ spring:
             non_contextual_creation: true    
             
 server:
-  port: 4200
+  port: 5000
