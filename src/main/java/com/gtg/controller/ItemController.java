@@ -3,8 +3,12 @@ package com.gtg.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,13 +34,23 @@ public class ItemController {
 	}
 	
 	
-	@PostMapping("newItem")
-	public String addNewItem(@RequestBody Item item) {
+	@PostMapping("/newItem")
+	public ResponseEntity<String> addNewItem(@RequestBody Item item) {
 		if(item.getItemName() != null) {
 			itemRepo.save(item);
-			return "Item successfully created";
+			return new ResponseEntity<String>("Item created", HttpStatus.CREATED);
 		}
-		return "Failed to create item. Try again!"; 
+		return new ResponseEntity<String>("Failed to create", HttpStatus.BAD_REQUEST);
+	}
+	
+	@DeleteMapping("/item/{id}")
+	public ResponseEntity<String> deleteItem(@PathVariable long id) {
+		Item item = itemRepo.findByItemId(id);
+		if(item != null) {
+			itemRepo.delete(item);
+			return new ResponseEntity<String>("Item deleted", HttpStatus.ACCEPTED);
+		}
+		return new ResponseEntity<String>("Failed to delete", HttpStatus.BAD_REQUEST);
 	}
 	
 	
