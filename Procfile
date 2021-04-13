@@ -1,1 +1,1 @@
-web: java -jar target/GoodToGo-0.0.1-SNAPSHOT.jar
+web: java -jar target/GoodToGo-1.0.0.jar
